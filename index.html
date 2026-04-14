@@ -3,703 +3,271 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Startpage</title>
+<title>Start</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080810;--s1:#0f0f1a;--s2:#16162a;--s3:#1e1e38;
+  --b0:rgba(255,255,255,0.04);--b1:rgba(255,255,255,0.08);--b2:rgba(255,255,255,0.14);
+  --text:#f0f0fa;--sub:#8888aa;--dim:#444466;
+  --a1:#6c63ff;--a2:#00d4aa;--a3:#ff6b9d;--a4:#f0a500;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 20%,rgba(108,99,255,.12) 0%,transparent 65%),
+    radial-gradient(ellipse 45% 55% at 85% 75%,rgba(0,212,170,.09) 0%,transparent 65%),
+    radial-gradient(ellipse 35% 35% at 70% 15%,rgba(255,107,157,.07) 0%,transparent 55%);
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.page{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-rows:auto 1fr auto;max-width:1000px;margin:0 auto;padding:2rem 2rem 3rem;gap:0}
 
-  :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --surface2: #1a1a26;
-    --border: rgba(255,255,255,0.07);
-    --border-hover: rgba(255,255,255,0.15);
-    --text: #e8e8f0;
-    --muted: #6b6b80;
-    --accent: #7c6af7;
-    --accent2: #3dd9c3;
-    --accent3: #f76a8a;
-    --glow: rgba(124,106,247,0.15);
-  }
+/* HEADER */
+header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:2rem;border-bottom:1px solid var(--b0);animation:fadeUp .5s ease both}
+.clock{font-size:clamp(3rem,10vw,6.5rem);font-weight:900;letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,#fff 0%,var(--a1) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.date-line{margin-top:.35rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:300;color:var(--sub);letter-spacing:.14em;text-transform:uppercase}
+.weather{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;padding-top:.5rem}
+.w-main{display:flex;align-items:center;gap:.7rem}
+.w-icon{font-size:2rem;line-height:1}
+.w-temp{font-size:2rem;font-weight:700}
+.w-desc{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--sub);letter-spacing:.1em;text-transform:uppercase;text-align:right}
+.w-loc{font-size:.65rem;color:var(--dim);text-align:right}
 
-  html, body {
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    overflow-x: hidden;
-  }
+/* MAIN */
+main{display:flex;flex-direction:column;justify-content:center;gap:3rem;padding:3.5rem 0 2rem}
 
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 1.5rem 4rem;
-    position: relative;
-  }
+/* SEARCH */
+.search-section{animation:fadeUp .5s .1s ease both}
+.engine-tabs{display:flex;gap:.4rem;margin-bottom:.8rem}
+.etab{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .8rem;border-radius:99px;border:1px solid var(--b1);background:none;color:var(--dim);cursor:pointer;transition:all .18s}
+.etab:hover{color:var(--sub);border-color:var(--b2)}
+.etab.active{color:var(--a1);border-color:var(--a1);background:rgba(108,99,255,.1)}
+.search-box{position:relative;display:flex;align-items:center}
+.search-box input{width:100%;background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:1.1rem 4rem 1.1rem 1.6rem;font-family:'Outfit',sans-serif;font-size:1.05rem;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+.search-box input::placeholder{color:var(--dim)}
+.search-box input:focus{background:var(--s2);border-color:var(--a1);box-shadow:0 0 0 3px rgba(108,99,255,.15),0 8px 32px rgba(0,0,0,.4)}
+.search-go{position:absolute;right:1rem;background:none;border:none;cursor:pointer;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.search-go:hover{background:var(--b1)}
+.search-go svg{width:18px;height:18px;stroke:var(--a1);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-  /* Background noise + glow */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(124,106,247,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 35% at 80% 70%, rgba(61,217,195,0.06) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
+/* BOOKMARKS */
+.bm-section{animation:fadeUp .5s .2s ease both}
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+.bm-hint{font-size:.62rem;color:var(--dim)}
+.bm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem}
 
-  .container {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 860px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
+.bm{position:relative;background:var(--s1);border:1px solid var(--b0);border-radius:14px;padding:1rem .9rem .85rem;display:flex;flex-direction:column;align-items:center;gap:.55rem;text-decoration:none;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;overflow:hidden}
+.bm:hover{transform:translateY(-3px);border-color:var(--b2);background:var(--s2);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.bm-ico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;position:relative;z-index:1}
+.bm-name{font-size:.72rem;font-weight:500;color:var(--sub);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;z-index:1}
+.bm:hover .bm-name{color:var(--text)}
+.ci0{background:rgba(108,99,255,.15)}.ci1{background:rgba(0,212,170,.12)}.ci2{background:rgba(255,107,157,.12)}.ci3{background:rgba(240,165,0,.12)}.ci4{background:rgba(55,138,221,.12)}.ci5{background:rgba(99,220,120,.11)}
+.bm-add{border-style:dashed;border-color:var(--b0)}
+.bm-add:hover{border-color:rgba(108,99,255,.4)}
+.bm-add .bm-ico{background:rgba(108,99,255,.08)}
+.add-plus{font-size:1.5rem;font-weight:300;color:rgba(108,99,255,.6);line-height:1}
+.del-x{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;background:rgba(255,80,80,.85);color:#fff;font-size:.6rem;font-weight:700;display:none;align-items:center;justify-content:center;z-index:10;cursor:pointer;line-height:1}
+.bm:hover .del-x{display:flex}
 
-  /* ── CLOCK / DATE ── */
-  .clock-block {
-    margin-top: 5vh;
-    text-align: center;
-  }
+/* FOOTER */
+footer{border-top:1px solid var(--b0);padding-top:1.2rem;display:flex;align-items:center;justify-content:space-between;animation:fadeUp .5s .3s ease both}
+.footer-tip{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.08em}
+.footer-dots{display:flex;gap:.4rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--b2)}
+.dot:nth-child(1){background:var(--a1);opacity:.7}.dot:nth-child(2){background:var(--a2);opacity:.5}.dot:nth-child(3){background:var(--a3);opacity:.4}
 
-  .clock {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(3.5rem, 12vw, 7rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    background: linear-gradient(135deg, #e8e8f0 30%, var(--accent) 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--s2);border:1px solid var(--b2);border-radius:22px;padding:1.8rem;width:100%;max-width:360px;display:flex;flex-direction:column;gap:1rem;box-shadow:0 32px 80px rgba(0,0,0,.7);transform:translateY(12px);transition:transform .25s}
+.overlay.open .modal{transform:translateY(0)}
+.modal-title{font-size:1rem;font-weight:700;color:var(--text)}
+.mfield{display:flex;flex-direction:column;gap:.35rem}
+.mlabel{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--sub);text-transform:uppercase}
+.modal input{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:.65rem 1rem;font-family:'Outfit',sans-serif;font-size:.88rem;color:var(--text);outline:none;width:100%;transition:border-color .2s}
+.modal input::placeholder{color:var(--dim)}
+.modal input:focus{border-color:var(--a1)}
+.icon-grid{display:flex;flex-wrap:wrap;gap:.45rem}
+.iopt{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;cursor:pointer;border:2px solid transparent;background:var(--s1);transition:border-color .15s,background .15s}
+.iopt:hover{background:var(--s3)}
+.iopt.sel{border-color:var(--a1);background:rgba(108,99,255,.15)}
+.modal-btns{display:flex;gap:.6rem;margin-top:.2rem}
+.mbtn{flex:1;padding:.7rem;border-radius:11px;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .18s}
+.mbtn-cancel{background:var(--b0);color:var(--sub)}.mbtn-cancel:hover{background:var(--b1);color:var(--text)}
+.mbtn-save{background:var(--a1);color:#fff}.mbtn-save:hover{opacity:.85}
 
-  .date {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-top: 0.4rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  /* ── SEARCH ── */
-  .search-wrap {
-    width: 100%;
-    max-width: 620px;
-  }
-
-  .search-engine-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .engine-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    padding: 0.25rem 0.7rem;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.05em;
-  }
-
-  .engine-btn:hover,
-  .engine-btn.active {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--glow);
-  }
-
-  .search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .search-bar input {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1rem 3.5rem 1rem 1.4rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.95rem;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.25s, box-shadow 0.25s;
-  }
-
-  .search-bar input::placeholder { color: var(--muted); }
-
-  .search-bar input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--glow);
-  }
-
-  .search-btn {
-    position: absolute;
-    right: 0.8rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.3rem;
-    display: flex;
-    align-items: center;
-    opacity: 0.5;
-    transition: opacity 0.2s;
-  }
-
-  .search-btn:hover { opacity: 1; }
-
-  .search-btn svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; }
-
-  /* ── WEATHER ── */
-  .weather-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1rem 1.4rem;
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    min-width: 220px;
-    transition: border-color 0.2s;
-  }
-
-  .weather-card:hover { border-color: var(--border-hover); }
-
-  .weather-icon {
-    font-size: 2.2rem;
-    line-height: 1;
-  }
-
-  .weather-info { display: flex; flex-direction: column; gap: 2px; }
-
-  .weather-temp {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--text);
-  }
-
-  .weather-desc {
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .weather-loc {
-    font-size: 0.7rem;
-    color: var(--muted);
-  }
-
-  /* ── TOP ROW ── */
-  .top-row {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    gap: 1rem;
-    padding-top: 1.2rem;
-    flex-wrap: wrap;
-  }
-
-  /* ── BOOKMARKS ── */
-  .bookmarks-section {
-    width: 100%;
-  }
-
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-
-  .bookmarks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 0.75rem;
-  }
-
-  .bookmark {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 0.9rem 0.75rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: border-color 0.2s, background 0.2s, transform 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .bookmark::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .bookmark:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-  }
-
-  .bookmark:hover::before { opacity: 1; }
-
-  .bm-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-  }
-
-  .bm-label {
-    font-size: 0.7rem;
-    color: var(--muted);
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-
-  /* Color variants for bookmark icons */
-  .bm-purple { background: rgba(124,106,247,0.15); }
-  .bm-teal   { background: rgba(61,217,195,0.12); }
-  .bm-pink   { background: rgba(247,106,138,0.12); }
-  .bm-amber  { background: rgba(239,159,39,0.12); }
-  .bm-blue   { background: rgba(55,138,221,0.12); }
-  .bm-green  { background: rgba(99,153,34,0.12); }
-
-  /* ADD bookmark button */
-  .bookmark.add-btn {
-    border-style: dashed;
-    border-color: rgba(255,255,255,0.05);
-  }
-
-  .bookmark.add-btn:hover { border-color: var(--accent); }
-
-  .add-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(124,106,247,0.08);
-    color: var(--accent);
-    font-size: 1.3rem;
-    font-weight: 300;
-  }
-
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-  }
-
-  .modal-overlay.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .modal {
-    background: var(--surface2);
-    border: 1px solid var(--border-hover);
-    border-radius: 18px;
-    padding: 1.5rem;
-    width: 100%;
-    max-width: 340px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-  }
-
-  .modal h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 0.2rem;
-  }
-
-  .modal input {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.65rem 0.9rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.82rem;
-    color: var(--text);
-    outline: none;
-    width: 100%;
-    transition: border-color 0.2s;
-  }
-
-  .modal input::placeholder { color: var(--muted); }
-  .modal input:focus { border-color: var(--accent); }
-
-  .modal-actions { display: flex; gap: 0.6rem; }
-
-  .btn-save, .btn-cancel {
-    flex: 1;
-    padding: 0.65rem;
-    border-radius: 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    transition: all 0.2s;
-  }
-
-  .btn-save {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-
-  .btn-save:hover { opacity: 0.85; }
-
-  .btn-cancel {
-    background: none;
-    color: var(--muted);
-  }
-
-  .btn-cancel:hover { border-color: var(--border-hover); color: var(--text); }
-
-  /* icon picker */
-  .icon-picker {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .icon-opt {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    cursor: pointer;
-    border: 2px solid transparent;
-    background: var(--surface);
-    transition: border-color 0.15s;
-  }
-
-  .icon-opt.selected { border-color: var(--accent); }
-
-  /* Divider row */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: var(--border);
-    margin: 0.25rem 0;
-  }
-
-  @media (max-width: 480px) {
-    .clock { font-size: clamp(3rem, 18vw, 5rem); }
-    .bookmarks-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
-  }
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:520px){.page{padding:1.5rem 1rem 2rem}header{flex-direction:column;gap:1rem}.weather{align-items:flex-start}.bm-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}}
 </style>
 </head>
 <body>
-
-<div class="container">
-
-  <!-- Top row: weather right-aligned -->
-  <div class="top-row">
-    <div class="weather-card" id="weatherCard">
-      <div class="weather-icon" id="weatherIcon">⋯</div>
-      <div class="weather-info">
-        <div class="weather-temp" id="weatherTemp">──°C</div>
-        <div class="weather-desc" id="weatherDesc">読み込み中</div>
-        <div class="weather-loc" id="weatherLoc"></div>
-      </div>
-    </div>
+<div class="page">
+<header>
+  <div>
+    <div class="clock" id="clock">00:00</div>
+    <div class="date-line" id="dateLine">────</div>
   </div>
-
-  <!-- Clock -->
-  <div class="clock-block">
-    <div class="clock" id="clock">00:00:00</div>
-    <div class="date" id="date">──── ── ──</div>
-  </div>
-
-  <!-- Search -->
-  <div class="search-wrap">
-    <div class="search-engine-tabs" id="engineTabs">
-      <button class="engine-btn active" data-engine="google" data-url="https://www.google.com/search?q=">Google</button>
-      <button class="engine-btn" data-engine="ddg" data-url="https://duckduckgo.com/?q=">DuckDuckGo</button>
-      <button class="engine-btn" data-engine="bing" data-url="https://www.bing.com/search?q=">Bing</button>
+  <div class="weather">
+    <div class="w-main">
+      <span class="w-icon" id="wIcon"> </span>
+      <span class="w-temp" id="wTemp">──°</span>
     </div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="検索…" autocomplete="off" autofocus />
-      <button class="search-btn" id="searchBtn">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
+    <div class="w-desc" id="wDesc">読み込み中…</div>
+    <div class="w-loc" id="wLoc"></div>
+  </div>
+</header>
+
+<main>
+  <div class="search-section">
+    <div class="engine-tabs" id="engineTabs">
+      <button class="etab active" data-url="https://www.google.com/search?q=">Google</button>
+      <button class="etab" data-url="https://duckduckgo.com/?q=">DuckDuckGo</button>
+      <button class="etab" data-url="https://www.bing.com/search?q=">Bing</button>
+      <button class="etab" data-url="https://search.yahoo.co.jp/search?p=">Yahoo! JP</button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="何を調べますか？" autocomplete="off" autofocus/>
+      <button class="search-go" id="searchGo">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- Bookmarks -->
-  <div class="bookmarks-section">
-    <div class="section-label">ブックマーク</div>
-    <div class="bookmarks-grid" id="bookmarksGrid"></div>
+  <div class="bm-section">
+    <div class="sec-header">
+      <span class="sec-label">Bookmarks</span>
+      <span class="bm-hint">✕ or 右クリックで削除</span>
+    </div>
+    <div class="bm-grid" id="bmGrid"></div>
   </div>
+</main>
 
+<footer>
+  <span class="footer-tip">Enter to search &nbsp;·&nbsp; Right-click bookmark to remove</span>
+  <div class="footer-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+</footer>
 </div>
 
-<!-- Add bookmark modal -->
-<div class="modal-overlay" id="modalOverlay">
+<div class="overlay" id="overlay">
   <div class="modal">
-    <h3>ブックマーク追加</h3>
-    <input type="text" id="bmName" placeholder="名前（例：GitHub）" maxlength="20"/>
-    <input type="text" id="bmUrl" placeholder="URL（例：https://github.com）"/>
-    <div class="section-label" style="margin:0">アイコン</div>
-    <div class="icon-picker" id="iconPicker"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" id="modalCancel">キャンセル</button>
-      <button class="btn-save" id="modalSave">保存</button>
+    <div class="modal-title">ブックマーク追加</div>
+    <div class="mfield"><span class="mlabel">名前</span><input id="mName" placeholder="例：GitHub" maxlength="24"/></div>
+    <div class="mfield"><span class="mlabel">URL</span><input id="mUrl" placeholder="例：https://github.com"/></div>
+    <div class="mfield"><span class="mlabel">アイコン</span><div class="icon-grid" id="iconGrid"></div></div>
+    <div class="modal-btns">
+      <button class="mbtn mbtn-cancel" id="mCancel">キャンセル</button>
+      <button class="mbtn mbtn-save" id="mSave">追加する</button>
     </div>
   </div>
 </div>
 
 <script>
-// ── CLOCK ──
-function updateClock() {
-  const now = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
-  const m = String(now.getMinutes()).padStart(2,'0');
-  const s = String(now.getSeconds()).padStart(2,'0');
-  document.getElementById('clock').textContent = `${h}:${m}:${s}`;
-
-  const days = ['日','月','火','水','木','金','土'];
-  const y = now.getFullYear();
-  const mo = String(now.getMonth()+1).padStart(2,'0');
-  const d = String(now.getDate()).padStart(2,'0');
-  const day = days[now.getDay()];
-  document.getElementById('date').textContent = `${y} / ${mo} / ${d}  ${day}曜日`;
+// CLOCK
+const DAYS=['日','月','火','水','木','金','土'];
+function tick(){
+  const n=new Date();
+  document.getElementById('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+  document.getElementById('dateLine').textContent=n.getFullYear()+' / '+String(n.getMonth()+1).padStart(2,'0')+' / '+String(n.getDate()).padStart(2,'0')+'  '+DAYS[n.getDay()]+'曜日';
 }
-updateClock();
-setInterval(updateClock, 1000);
+tick();setInterval(tick,1000);
 
-// ── SEARCH ──
-let currentSearchUrl = 'https://www.google.com/search?q=';
-
-document.querySelectorAll('.engine-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.engine-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentSearchUrl = btn.dataset.url;
+// SEARCH
+let sUrl='https://www.google.com/search?q=';
+document.querySelectorAll('.etab').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.etab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');sUrl=b.dataset.url;
+    document.getElementById('searchInput').focus();
   });
 });
+function go(){const q=document.getElementById('searchInput').value.trim();if(q)window.open(sUrl+encodeURIComponent(q),'_blank')}
+document.getElementById('searchGo').addEventListener('click',go);
+document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
 
-function doSearch() {
-  const q = document.getElementById('searchInput').value.trim();
-  if (!q) return;
-  window.open(currentSearchUrl + encodeURIComponent(q), '_blank');
+// WEATHER
+const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+const WD={0:'快晴',1:'ほぼ晴れ',2:'一部曇り',3:'曇り',45:'霧',48:'霧',51:'小雨',53:'霧雨',55:'霧雨',61:'小雨',63:'雨',65:'強雨',71:'小雪',73:'雪',75:'大雪',80:'にわか雨',81:'雨',82:'激雨',95:'雷雨',96:'雷雨',99:'雷雨'};
+function loadW(lat,lon,city){
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+    .then(r=>r.json()).then(d=>{
+      const cw=d.current_weather,c=cw.weathercode;
+      document.getElementById('wIcon').textContent=WI[c]||'🌡️';
+      document.getElementById('wTemp').textContent=Math.round(cw.temperature)+'°C';
+      document.getElementById('wDesc').textContent=WD[c]||'─';
+      document.getElementById('wLoc').textContent=city;
+    }).catch(()=>{document.getElementById('wDesc').textContent='取得できません'});
 }
+if(navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const{latitude:la,longitude:lo}=pos.coords;
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${la}&lon=${lo}&format=json`)
+      .then(r=>r.json()).then(g=>loadW(la,lo,g.address?.city||g.address?.town||g.address?.village||'現在地'))
+      .catch(()=>loadW(la,lo,'現在地'));
+  },()=>loadW(35.9251,139.4858,'川越市'));
+}else loadW(35.9251,139.4858,'川越市');
 
-document.getElementById('searchBtn').addEventListener('click', doSearch);
-document.getElementById('searchInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doSearch();
-});
-
-// ── WEATHER ──
-const weatherIcons = {
-  0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️',
-  45:'🌫️', 48:'🌫️',
-  51:'🌦️', 53:'🌦️', 55:'🌧️',
-  61:'🌧️', 63:'🌧️', 65:'🌧️',
-  71:'❄️', 73:'❄️', 75:'❄️',
-  80:'🌦️', 81:'🌧️', 82:'⛈️',
-  95:'⛈️', 96:'⛈️', 99:'⛈️'
-};
-const weatherDescs = {
-  0:'快晴', 1:'ほぼ晴れ', 2:'一部曇り', 3:'曇り',
-  45:'霧', 48:'霧',
-  51:'小雨', 53:'霧雨', 55:'霧雨',
-  61:'小雨', 63:'雨', 65:'強雨',
-  71:'小雪', 73:'雪', 75:'大雪',
-  80:'にわか雨', 81:'雨', 82:'激雨',
-  95:'雷雨', 96:'雷雨', 99:'雷雨'
-};
-
-function fetchWeather(lat, lon, city) {
-  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`)
-    .then(r => r.json())
-    .then(data => {
-      const cw = data.current_weather;
-      const code = cw.weathercode;
-      document.getElementById('weatherIcon').textContent = weatherIcons[code] || '🌡️';
-      document.getElementById('weatherTemp').textContent = Math.round(cw.temperature) + '°C';
-      document.getElementById('weatherDesc').textContent = weatherDescs[code] || '──';
-      document.getElementById('weatherLoc').textContent = city || '現在地';
-    })
-    .catch(() => {
-      document.getElementById('weatherDesc').textContent = '取得失敗';
-    });
-}
-
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      const {latitude: lat, longitude: lon} = pos.coords;
-      // reverse geocode using open-meteo (no key needed)
-      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
-        .then(r => r.json())
-        .then(geo => {
-          const city = geo.address?.city || geo.address?.town || geo.address?.village || '現在地';
-          fetchWeather(lat, lon, city);
-        })
-        .catch(() => fetchWeather(lat, lon, ''));
-    },
-    () => {
-      // fallback: 川越市
-      fetchWeather(35.9251, 139.4858, '川越市');
-    }
-  );
-} else {
-  fetchWeather(35.9251, 139.4858, '川越市');
-}
-
-// ── BOOKMARKS ──
-const ICONS = ['🔖','🌐','📧','📁','🎵','🎬','💻','🛒','📰','🔍','⭐','📝','🎮','📷','💬','🗂️'];
-const COLORS = ['bm-purple','bm-teal','bm-pink','bm-amber','bm-blue','bm-green'];
-
-const DEFAULT_BOOKMARKS = [
-  { name:'GitHub',    url:'https://github.com',        icon:'💻', color:'bm-purple' },
-  { name:'YouTube',   url:'https://youtube.com',        icon:'🎬', color:'bm-pink' },
-  { name:'Gmail',     url:'https://mail.google.com',    icon:'📧', color:'bm-amber' },
-  { name:'Reddit',    url:'https://reddit.com',         icon:'🗂️', color:'bm-teal' },
-  { name:'Twitter/X', url:'https://x.com',              icon:'📝', color:'bm-blue' },
-  { name:'Wikipedia', url:'https://ja.wikipedia.org',   icon:'🌐', color:'bm-green' },
+// BOOKMARKS
+const ICONS=['🔖','🌐','📧','📁','🎵','🎬','💻','🛒','📰','🔍','⭐','📝','🎮','📷','💬','🗂️','🚀','🧩','📊','🔐'];
+const COLORS=['ci0','ci1','ci2','ci3','ci4','ci5'];
+const DEFAULT=[
+  {name:'GitHub',url:'https://github.com',icon:'💻',c:'ci0'},
+  {name:'YouTube',url:'https://youtube.com',icon:'🎬',c:'ci2'},
+  {name:'Gmail',url:'https://mail.google.com',icon:'📧',c:'ci3'},
+  {name:'Reddit',url:'https://reddit.com',icon:'🗂️',c:'ci1'},
+  {name:'X / Twitter',url:'https://x.com',icon:'📝',c:'ci4'},
+  {name:'Wikipedia',url:'https://ja.wikipedia.org',icon:'🌐',c:'ci5'},
 ];
+let BMS=JSON.parse(localStorage.getItem('sp3_bm')||'null')||[...DEFAULT];
+let selIcon=ICONS[0];
+function save(){localStorage.setItem('sp3_bm',JSON.stringify(BMS))}
 
-let bookmarks = JSON.parse(localStorage.getItem('sp_bookmarks') || 'null') || [...DEFAULT_BOOKMARKS];
-let selectedIcon = ICONS[0];
-let selectedColor = COLORS[0];
-
-function saveBookmarks() {
-  localStorage.setItem('sp_bookmarks', JSON.stringify(bookmarks));
-}
-
-function renderBookmarks() {
-  const grid = document.getElementById('bookmarksGrid');
-  grid.innerHTML = '';
-
-  bookmarks.forEach((bm, i) => {
-    const a = document.createElement('a');
-    a.className = 'bookmark';
-    a.href = bm.url;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.innerHTML = `
-      <div class="bm-icon ${bm.color}">${bm.icon}</div>
-      <div class="bm-label">${bm.name}</div>
-    `;
-    // right-click to delete
-    a.addEventListener('contextmenu', e => {
-      e.preventDefault();
-      if (confirm(`「${bm.name}」を削除しますか？`)) {
-        bookmarks.splice(i, 1);
-        saveBookmarks();
-        renderBookmarks();
-      }
-    });
-    grid.appendChild(a);
+function render(){
+  const g=document.getElementById('bmGrid');g.innerHTML='';
+  BMS.forEach((b,i)=>{
+    const a=document.createElement('a');
+    a.className='bm';a.href=b.url;a.target='_blank';a.rel='noopener';
+    a.innerHTML=`<div class="del-x" data-i="${i}">✕</div><div class="bm-ico ${b.c}">${b.icon}</div><div class="bm-name">${b.name}</div>`;
+    a.querySelector('.del-x').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();BMS.splice(i,1);save();render()});
+    a.addEventListener('contextmenu',e=>{e.preventDefault();BMS.splice(i,1);save();render()});
+    g.appendChild(a);
   });
-
-  // Add button
-  const addBtn = document.createElement('div');
-  addBtn.className = 'bookmark add-btn';
-  addBtn.innerHTML = `<div class="add-icon">+</div><div class="bm-label">追加</div>`;
-  addBtn.addEventListener('click', openModal);
-  grid.appendChild(addBtn);
+  const add=document.createElement('div');
+  add.className='bm bm-add';
+  add.innerHTML='<div class="bm-ico"><div class="add-plus">+</div></div><div class="bm-name">追加</div>';
+  add.addEventListener('click',openModal);
+  g.appendChild(add);
 }
 
-// ── MODAL ──
-function openModal() {
-  selectedIcon = ICONS[0];
-  selectedColor = COLORS[0];
-  document.getElementById('bmName').value = '';
-  document.getElementById('bmUrl').value = '';
-  buildIconPicker();
-  document.getElementById('modalOverlay').classList.add('open');
-  document.getElementById('bmName').focus();
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-
-function buildIconPicker() {
-  const picker = document.getElementById('iconPicker');
-  picker.innerHTML = '';
-  ICONS.forEach(ic => {
-    const d = document.createElement('div');
-    d.className = 'icon-opt' + (ic === selectedIcon ? ' selected' : '');
-    d.textContent = ic;
-    d.addEventListener('click', () => {
-      selectedIcon = ic;
-      picker.querySelectorAll('.icon-opt').forEach(o => o.classList.remove('selected'));
-      d.classList.add('selected');
-    });
-    picker.appendChild(d);
+function buildIcons(){
+  const g=document.getElementById('iconGrid');g.innerHTML='';
+  ICONS.forEach(ic=>{
+    const d=document.createElement('div');
+    d.className='iopt'+(ic===selIcon?' sel':'');d.textContent=ic;
+    d.addEventListener('click',()=>{selIcon=ic;g.querySelectorAll('.iopt').forEach(x=>x.classList.remove('sel'));d.classList.add('sel')});
+    g.appendChild(d);
   });
 }
-
-document.getElementById('modalCancel').addEventListener('click', closeModal);
-document.getElementById('modalOverlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
+function openModal(){selIcon=ICONS[0];document.getElementById('mName').value='';document.getElementById('mUrl').value='';buildIcons();document.getElementById('overlay').classList.add('open');setTimeout(()=>document.getElementById('mName').focus(),50)}
+function closeModal(){document.getElementById('overlay').classList.remove('open')}
+document.getElementById('mCancel').addEventListener('click',closeModal);
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal()});
+document.getElementById('mSave').addEventListener('click',()=>{
+  let name=document.getElementById('mName').value.trim();
+  let url=document.getElementById('mUrl').value.trim();
+  if(!name||!url){alert('名前とURLを入力してください');return}
+  if(!/^https?:\/\//.test(url))url='https://'+url;
+  BMS.push({name,url,icon:selIcon,c:COLORS[BMS.length%COLORS.length]});
+  save();render();closeModal();
 });
-
-document.getElementById('modalSave').addEventListener('click', () => {
-  let name = document.getElementById('bmName').value.trim();
-  let url = document.getElementById('bmUrl').value.trim();
-  if (!name || !url) { alert('名前とURLを入力してください'); return; }
-  if (!/^https?:\/\//.test(url)) url = 'https://' + url;
-  const color = COLORS[bookmarks.length % COLORS.length];
-  bookmarks.push({ name, url, icon: selectedIcon, color });
-  saveBookmarks();
-  renderBookmarks();
-  closeModal();
-});
-
-renderBookmarks();
+render();
 </script>
 </body>
 </html>
